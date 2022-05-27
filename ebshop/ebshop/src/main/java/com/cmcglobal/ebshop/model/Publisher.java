@@ -1,6 +1,9 @@
 package com.cmcglobal.ebshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "publishers")
@@ -23,6 +26,10 @@ public class Publisher {
 
     @Column
     private String Address;
+
+    @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnoreProperties(value = "publisher")
+    private List<Ebook> ebooks;
 
     public Publisher(Long id, String name, String website, String founder, Integer foundedYear, String address) {
         this.id = id;

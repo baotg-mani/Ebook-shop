@@ -45,7 +45,11 @@ public class Ebook {
     @Column
     private Boolean deleted;
 
-    public Ebook(Long id, String title, String isbn, String description, Author author, Publisher publisher, Date publisherDate, Integer pages, Long price, Integer quantity, Boolean deleted) {
+    @OneToOne(mappedBy = "ebook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "ebook")
+    private OrderDetail orderDetail;
+
+    public Ebook(Long id, String title, String isbn, String description, Author author, Publisher publisher, Date publisherDate, Integer pages, Long price, Integer quantity, Boolean deleted, OrderDetail orderDetail) {
         this.id = id;
         this.title = title;
         this.isbn = isbn;
@@ -57,6 +61,7 @@ public class Ebook {
         this.price = price;
         this.quantity = quantity;
         this.deleted = deleted;
+        this.orderDetail = orderDetail;
     }
 
     public void setId(Long id) {
@@ -103,6 +108,10 @@ public class Ebook {
         this.deleted = deleted;
     }
 
+    public void setOrderDetail(OrderDetail orderDetail) {
+        this.orderDetail = orderDetail;
+    }
+
     public Long getId() {
         return id;
     }
@@ -145,5 +154,9 @@ public class Ebook {
 
     public Boolean getDeleted() {
         return deleted;
+    }
+
+    public OrderDetail getOrderDetail() {
+        return orderDetail;
     }
 }

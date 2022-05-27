@@ -1,7 +1,10 @@
 package com.cmcglobal.ebshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -16,6 +19,10 @@ public class Order {
 
     @Column
     private Date createdDate;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnoreProperties(value = "order")
+    private List<OrderDetail> orderDetails;
 
     public Order(Long id, Customer customer, Date createdDate) {
         this.id = id;

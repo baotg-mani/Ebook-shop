@@ -1,5 +1,7 @@
 package com.cmcglobal.ebshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,12 +15,13 @@ public class OrderDetail {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ebook_id")
-    private Ebook ebook;
-
     @Column
     private Integer quantity;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnoreProperties(value = "orderDetail")
+    @JoinColumn(name = "ebook_id")
+    private Ebook ebook;
 
     public OrderDetail(Long id, Order order, Ebook ebook, Integer quantity) {
         this.id = id;
