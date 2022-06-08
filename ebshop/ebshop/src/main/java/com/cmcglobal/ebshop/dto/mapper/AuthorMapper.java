@@ -13,11 +13,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class AuthorMapper {
-    @Autowired
     private EbookRepository ebookRepository;
+    private AuthorRepository authorRepository;
 
     @Autowired
-    private AuthorRepository authorRepository;
+    public AuthorMapper(EbookRepository ebookRepository, AuthorRepository authorRepository) {
+        this.ebookRepository = ebookRepository;
+        this.authorRepository = authorRepository;
+    }
 
     public AuthorDTO toDto(Author author) {
         AuthorDTO authorDTO = new AuthorDTO();

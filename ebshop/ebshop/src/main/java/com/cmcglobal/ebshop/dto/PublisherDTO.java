@@ -14,4 +14,7 @@ public class PublisherDTO {
     private String Address;
     private List<Ebook> ebooks;
 
+    private Integer numOfTitles;
+    private List<Ebook> top5TitleBestSeller;
+
 }

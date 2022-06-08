@@ -1,41 +1,51 @@
 package com.cmcglobal.ebshop.controller;
 
 import com.cmcglobal.ebshop.dto.PublisherDTO;
-import com.cmcglobal.ebshop.repository.PublisherRepository;
+import com.cmcglobal.ebshop.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/publisher")
 public class PublisherController {
+    private final PublisherService publisherService;
+
     @Autowired
-    private PublisherRepository publisherRepository;
+    public PublisherController(PublisherService publisherService) {
+        this.publisherService = publisherService;
+    }
 
     @GetMapping
-    public ResponseEntity<PublisherDTO> getAllPublishers() {
-        return null;
+    public ResponseEntity<List<PublisherDTO>> getAllPublishers() {
+        List<PublisherDTO> publishersRes = publisherService.getAllPublishers();
+        return ResponseEntity.ok(publishersRes);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PublisherDTO> getPublisherById(@PathVariable long id) {
-        return null;
+        PublisherDTO publisherRes = publisherService.getPublisherById(id);
+        return ResponseEntity.ok(publisherRes);
     }
 
     @PostMapping
     public ResponseEntity<PublisherDTO> createPublisher(@Valid @RequestBody PublisherDTO publisherDTO) {
-        return null;
+        PublisherDTO publisherRes = publisherService.addPublisher(publisherDTO);
+        return ResponseEntity.ok(publisherRes);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PublisherDTO> updatePublisherById(@Valid @RequestBody PublisherDTO publisherDTO, @PathVariable long id) {
-        return null;
+        PublisherDTO publisherRes = publisherService.updatePublisherById(publisherDTO, id);
+        return ResponseEntity.ok(publisherRes);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PublisherDTO> deletePublisher(@PathVariable long id) {
-        return null;
+    public ResponseEntity<?> deletePublisher(@PathVariable long id) {
+        publisherService.deletePublisherById(id);
+        return ResponseEntity.ok("delete success!");
     }
 }
